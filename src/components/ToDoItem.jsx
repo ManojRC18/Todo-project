@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-function ToDoItem({ todo, onDelete, onToggleComplete, onEdit }) {
+function ToDoItem(props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [editText, setEditText] = useState(todo.text);
+  const [editText, setEditText] = useState(props.todo.text);
 
   const handleSave = () => {
     if (editText.trim() === '') return;
-    onEdit(todo.id, editText);
+    props.onEdit(props.todo.id, editText);
     setIsEditing(false);
   };
 
   const handleCancel = () => {
-    setEditText(todo.text);
+    setEditText(props.todo.text);
     setIsEditing(false);
   };
 
@@ -19,8 +19,8 @@ function ToDoItem({ todo, onDelete, onToggleComplete, onEdit }) {
     <div className="todo-item">
       <input
         type="checkbox"
-        checked={todo.completed}
-        onChange={() => onToggleComplete(todo.id)}
+        checked={props.todo.completed}
+        onChange={() => props.onToggleComplete(props.todo.id)}
         className="checkbox"
       />
       {isEditing ? (
@@ -31,8 +31,8 @@ function ToDoItem({ todo, onDelete, onToggleComplete, onEdit }) {
           className="edit-input"
         />
       ) : (
-        <span className={`todo-text ${todo.completed ? 'completed' : ''}`}>
-          {todo.text}
+        <span className={`todo-text ${props.todo.completed ? 'completed' : ''}`}>
+          {props.todo.text}
         </span>
       )}
       <div className="button-group">
@@ -50,7 +50,7 @@ function ToDoItem({ todo, onDelete, onToggleComplete, onEdit }) {
             <button onClick={() => setIsEditing(true)} className="edit-btn">
               Edit
             </button>
-            <button onClick={() => onDelete(todo.id)} className="delete-btn">
+            <button onClick={() => props.onDelete(props.todo.id)} className="delete-btn">
               Delete
             </button>
           </>

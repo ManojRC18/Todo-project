@@ -1,18 +1,18 @@
 import ToDoItem from './ToDoItem';
 
-function ToDoList({ todos, onDelete, onToggleComplete, onEdit }) {
+function ToDoList(props) {
   return (
     <div className="todo-list">
-      {todos.length === 0 ? (
+      {props.todos.length === 0 ? (
         <p className="empty-message">No tasks yet. Add one above!</p>
       ) : (
-        todos.map((todo) => (
+        props.todos.map((todo) => (
           <ToDoItem
             key={todo.id}
             todo={todo}
-            onDelete={onDelete}
-            onToggleComplete={onToggleComplete}
-            onEdit={onEdit}
+            onDelete={props.onDelete}
+            onToggleComplete={props.onToggleComplete}
+            onEdit={props.onEdit}
           />
         ))
       )}
