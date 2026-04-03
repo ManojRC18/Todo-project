@@ -8,6 +8,20 @@ function App() {
     { id: 1, text: 'Sample Task 1', completed: false },
     { id: 2, text: 'Sample Task 2', completed: false },
   ]);
+  const [inputValue, setInputValue] = useState('');
+
+  const addTodo = (e) => {
+    e.preventDefault();
+    if (inputValue.trim() === '') return;
+
+    const newTodo = {
+      id: Date.now(),
+      text: inputValue,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+    setInputValue('');
+  };
 
   const deleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -32,12 +46,26 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <ToDoList
-        todos={todos}
-        onDelete={deleteTodo}
-        onToggleComplete={toggleComplete}
-        onEdit={editTodo}
-      />
+      <div className="container">
+        <form onSubmit={addTodo} className="add-todo-form">
+          <input
+            type="text"
+            className="todo-input"
+            placeholder="Add a new task..."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+          <button type="submit" className="add-btn">
+            Add
+          </button>
+        </form>
+        <ToDoList
+          todos={todos}
+          onDelete={deleteTodo}
+          onToggleComplete={toggleComplete}
+          onEdit={editTodo}
+        />
+      </div>
     </div>
   );
 }
